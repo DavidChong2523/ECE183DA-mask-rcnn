@@ -161,6 +161,8 @@ class CustomDataset(utils.Dataset):
         for i, p in enumerate(info["polygons"]):
             # Get indexes of pixels inside the polygon and set them to 1
             rr, cc = skimage.draw.polygon(p['all_points_y'], p['all_points_x'])
+            rr = np.clip(rr, 0, mask.shape[0]-1)
+            cc = np.clip(cc, 0, mask.shape[1]-1)
             mask[rr, cc, i] = 1
 
         # Return mask, and array of class IDs of each instance. Since we have
